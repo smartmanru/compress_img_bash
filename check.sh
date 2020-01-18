@@ -24,8 +24,8 @@ if [[ "$old_count" != "$count" ]];
 					already=''
 					mv {/fiche/images,/tmp}/$r
 
-					echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-filename /tmp/$r" 
-					/opt/resmushit-cli.sh -q 50 -o /fiche/images --preserve-filename /tmp/$r 
+					echo "./resmushit --preserve-exif -notime -q 50 -o /fiche/images --preserve-filename /tmp/$r" 
+					./resmushit -q 50 -o /fiche/images --preserve-filename /tmp/$r 
 						if [[ -f "/fiche/images/$r" ]]
 						then
 							echo $r
