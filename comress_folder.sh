@@ -1,9 +1,13 @@
 #l!/bin/bash
+cd `dirname $0`
+h=`pwd`
+echo $bash
+export folder=$h/folder
 #cd /fiche/images
 ##pn="ls"
 #echo $($pn)
-folder=$1
-if [ -z $1 ]
+#export folder=$1
+if [ ! -z $1 ]
 then exit 1
 fi
 #*.{jpg,png,gif,jpeg}
@@ -18,17 +22,19 @@ function check {
 #if [[ "$old_count" != "$count" ]];
 #	then ((c=$count-$old_count))
 	
-		for r in $(find $folder)
+		for r in $(find $folder|grep jpg)
 		do
 			echo $r
-			e=$(echo "${r#*.}")
+			e=$(echo "${r##*.}")
+			filename=`basename -- $r`
+			echo $e
 				if [[ "$e" == "jpg" || "$e" == "png" || "$e" == "gif" ]]
 				then
 #					already=''
-					mv {/fiche/images,/tmp}/$r
+				
 
-					echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-filename /tmp/$r" 
-					/opt/resmushit-cli.sh -q 50 -o /fiche/images --preserve-filename /tmp/$r 
+					#echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-filename /tmp/$r" 
+					./resmushit -q 50 $r --preserve-filename -o $h/folder
 #						if [[ -f "/fiche/images/$r" ]]
 #						then
 ##						else
@@ -36,9 +42,9 @@ function check {
 #						fi
 					fi
 				done
-				check
-			else 
-				check
+				
+			#else 
+				#check
 #		fi
 	}
 
