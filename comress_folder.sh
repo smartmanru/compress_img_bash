@@ -26,15 +26,15 @@ function check {
 		do
 			echo $r
 			e=$(echo "${r##*.}")
-			filename=`basename -- $r`
+			filename=`basename -- "$r"`
 			echo $e
 				if [[ "$e" == "jpg" || "$e" == "png" || "$e" == "gif" ]]
 				then
-#					already=''
-				
+				fullpath=$(echo "$r"|awk -F "$filename" {'print $1'})
+				echo $fullpath
 
 					#echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-filename /tmp/$r" 
-					./resmushit -q 50 $r --preserve-filename -o $h/folder
+					./resmushit -q 50 "$r" --preserve-filename -o $fullpath/ --preserve-exif --notime
 #						if [[ -f "/fiche/images/$r" ]]
 #						then
 ##						else
