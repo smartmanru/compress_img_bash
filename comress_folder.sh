@@ -11,7 +11,7 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
     ;;
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
-
+h_len=$(echo `expr "$h" : '.*'`)
 
 #*.{jpg,png,gif,jpeg}
 function check {
@@ -35,9 +35,20 @@ mkdir -p $tmp
 				if [[ "$e" == "jpg" || "$e" == "png" || "$e" == "gif" ]]
 				then
 				fp=$(echo "$r"|awk -F "$n" {'print $1'})
-				echo "/$fp/$n"
+				pa=${r:$h_len}
+				r_len=$(echo `expr "$r" : '.*'`) #длина пути полного
+				n_len=$(echo `expr "$n" : '.*'`) #длина имени 
+				pa_len=$(echo `expr "$pa" : '.*'`)
+
+				len_np=$(expr $pa_len-$n_len)
+				np=${pa:0:$len_np}
 				#echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-n /tmp/$r" 
-				./resmushit -q 50 "$r"  --preserve-exif --preserve-n
+		
+				./resmushit -q 50 "$r"  --preserve-exif --preserve-filename -o tmp/$np
+				if [ $? !=0 ] 
+				then 
+					./resmushit -q 50 "$r"  --preserve-exif --preserve-filename -o tmp/$np
+				fi
 				# if [[ ! -f "$fp/$r" ]]
 				# then
 				# 		mv {./$tmp,$fp}/$r
