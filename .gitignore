@@ -1,3 +1,6 @@
 *.bkp
 folder/
 .vscode/
+19/
+tmp/
+.vscode/launch.json

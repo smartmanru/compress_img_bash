@@ -2,15 +2,8 @@
 cd `dirname $0`
 h=`pwd`
 echo $bash
-export f=$h/folder
+export f="$h/19"
 
-while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-
-  -f | --flag )
-    flag=1
-    ;;
-esac; shift; done
-if [[ "$1" == '--' ]]; then shift; fi
 h_len=$(echo `expr "$h" : '.*'`)
 
 #*.{jpg,png,gif,jpeg}
@@ -45,7 +38,7 @@ mkdir -p $tmp
 				#echo "/opt/resmushit-cli.sh --preserve-exif -notime -q 50 -o /fiche/images --preserve-n /tmp/$r" 
 		
 				./resmushit -q 50 "$r"  --preserve-exif --preserve-filename -o tmp/$np
-				if [ $? !=0 ] 
+				if [ $? != 0 ] 
 				then 
 					./resmushit -q 50 "$r"  --preserve-exif --preserve-filename -o tmp/$np
 				fi
@@ -53,11 +46,11 @@ mkdir -p $tmp
 				# then
 				# 		mv {./$tmp,$fp}/$r
 				# fi
-				fi
+			fi
 				
 		done
 
 	}
 
 check
-
+#mv  -f $tmp/*  $f/
